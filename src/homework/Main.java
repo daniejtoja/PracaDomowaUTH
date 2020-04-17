@@ -130,7 +130,7 @@ class Manager extends Employee {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName()+": "+getName()+" "+getSurname()+". Wynagrodzenie: "+calculateSalary()+"\n"+printAll();
+        return this.getClass().getSimpleName()+": "+getName()+" "+getSurname()+". Wynagrodzenie: "+calculateSalary()+"\nLista płac:\n"+printAll();
     }
 
     public String printAll() {
@@ -182,19 +182,19 @@ class Manager extends Employee {
 }
 
 final class Dane {
-    private static final String[] imie = {"Daniel", "Wiktor", "Maciej", "Wojtek", "Czarek", "Bartek", "Julia", "Wiktoria", "Asia"};
-    private static final String[] nazwisko = {"Kowalski", "Baggins", "Szwarny", "Krasny", "Pawlak", "Krzynówek"};
+    private static final String[] imie = {"Daniel", "Wiktor", "Maciej", "Wojtek", "Czarek", "Bartek", "Julia", "Wiktoria", "Asia", "Tytus", "Domino", "Baltazar", "Jan"};
+    private static final String[] nazwisko = {"Popek","Kowalski", "Baggins", "Szwarny", "Krasny", "Pawlak", "Krzynówek", "Skisło", "Borubar", "Bomba", "Torpeda", "Głuś"};
 
     public static String getImie() {
-        return imie[(int)(Math.random() * 9)];
+        return imie[(int)(Math.random() * imie.length)];
     }
 
     public static String getNazwisko() {
-        return nazwisko[(int)(Math.random() * 6)];
+        return nazwisko[(int)(Math.random() * nazwisko.length)];
     }
 
     public static int getSalesDone() {
-        return (int)(Math.random()*50);
+        return (int)(5+(Math.random()*30));
     }
 
     public static int getCommision() {
