@@ -1,15 +1,11 @@
 package homework;
 
-
-import java.io.File;
-
 public class Main {
 
     public static void main(String[] args) {
-        //System.out.println(File.separator);
         //Manager menago = new Manager(Dane.getImie(), Dane.getNazwisko(), Dane.getManagerCommision(), Dane.getManagerCommision(),10);
         Manager menago = Manager.generateManager(10);
-        System.out.println(menago.toString());
+        System.out.println(menago.printAll());
 
     }
 
@@ -37,10 +33,6 @@ class Employee {
         return this.surname;
     }
 
-    public String getDept() {
-        return this.getClass().getSimpleName();
-    }
-
 
     public String toString() {
         return this.getClass().getSimpleName()+": "+getName()+" "+getSurname()+". Wynagrodzenie: "+calculateSalary()+"PLN";
@@ -52,17 +44,12 @@ class Employee {
 }
 
 class Serviceman extends Employee {
-    public int hoursDone;
+    private int hoursDone;
     private float hourlyWage;
 
     @Override
     public float calculateSalary() {
         return (float)Math.ceil(this.hoursDone * this.hourlyWage);
-    }
-
-    @Override
-    public String getDept() {
-        return this.getClass().getSimpleName();
     }
 
     public Serviceman(String name, String surname, int hoursDone, float hourlyWage) {
@@ -72,6 +59,8 @@ class Serviceman extends Employee {
     }
 
 
+
+
     public static Serviceman generateServiceman() {
         return new Serviceman(Dane.getImie(),Dane.getNazwisko(),Dane.getHoursDone(),Dane.getHourlyWage());
     }
@@ -79,7 +68,7 @@ class Serviceman extends Employee {
 }
 
 class Dealer extends Employee {
-    public int salesDone;
+    private int salesDone;
     private float commision;
 
     @Override
@@ -91,6 +80,10 @@ class Dealer extends Employee {
         super(name, surname);
         this.salesDone = salesDone;
         this.commision = commision;
+    }
+
+    public int getSalesDone() {
+        return salesDone;
     }
 
 
@@ -106,15 +99,10 @@ class Manager extends Employee {
 
     public Manager(String name, String surname, int dealersCommision, int servicemenCommision, int howManyEmployees) {
         super(name, surname);
-        this.staff = generateListOfEmployees(howManyEmployees);
+        this.staff = staff;
         this.dealersCommision = dealersCommision;
         this.servicemenCommision = servicemenCommision;
 
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName()+": "+getName()+" "+getSurname()+". Wynagrodzenie: "+calculateSalary()+"PLN\nLista płac:\n"+printAll();
     }
 
     public String printAll() {
@@ -125,7 +113,7 @@ class Manager extends Employee {
             }
 
         }
-        return print;
+        return this.toString()+"\n"+print;
     }
 
     @Override
@@ -136,8 +124,8 @@ class Manager extends Employee {
         for(int i = 0; i < staff.length; ++i){
 
             if(staff[i] != null) {
-                dealerDeals += (staff[i] instanceof Dealer) ?  ((Dealer)staff[i]).salesDone : 0;
-                servicemenHours += (staff[i] instanceof  Serviceman) ? ((Serviceman)staff[i]).hoursDone : 0;
+                dealerDeals += (staff[i] instanceof Dealer) ?  ((Dealer)staff[i]).getSalesDone() : 0;
+                servicemenHours += (staff[i] instanceof  Serviceman) ? ((Serviceman)staff[i]).getHoursDone() : 0;
             }
 
 
@@ -146,7 +134,7 @@ class Manager extends Employee {
         return (this.dealersCommision * dealerDeals)+(servicemenCommision * servicemenHours);
     }
 
-    public Employee[] generateListOfEmployees(int howMany) {
+    public static Employee[] generateListOfEmployees(int howMany) {
         Employee[] toReturn = new Employee[10];
 
 
@@ -160,7 +148,7 @@ class Manager extends Employee {
     }
 
     public static Manager generateManager(int howMany){
-        return new Manager(Dane.getImie(), Dane.getNazwisko(), Dane.getManagerCommision(), Dane.getManagerCommision(), howMany);
+        return new Manager(Dane.getImie(), Dane.getNazwisko(), Dane.getManagerCommision(), Dane.getManagerCommision(), );
     }
 }
 
