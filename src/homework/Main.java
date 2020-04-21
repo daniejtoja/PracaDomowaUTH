@@ -58,6 +58,9 @@ class Serviceman extends Employee {
         this.hourlyWage = hourlyWage;
     }
 
+    public int getHoursDone() {
+        return hoursDone;
+    }
 
 
 
