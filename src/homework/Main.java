@@ -1,10 +1,14 @@
 package homework;
 
 
+import java.io.File;
+
 public class Main {
 
     public static void main(String[] args) {
-        Manager menago = new Manager(Dane.getImie(), Dane.getNazwisko(), Dane.getManagerCommision(), Dane.getManagerCommision(),10);
+        //System.out.println(File.separator);
+        //Manager menago = new Manager(Dane.getImie(), Dane.getNazwisko(), Dane.getManagerCommision(), Dane.getManagerCommision(),10);
+        Manager menago = Manager.generateManager(10);
         System.out.println(menago.toString());
 
     }
@@ -38,9 +42,8 @@ class Employee {
     }
 
 
-    @Override
     public String toString() {
-        return "Pracownik: "+this.name+" "+this.surname+". Dział: "+this.getClass().getSimpleName()+". Wypłata: "+calculateSalary();
+        return this.getClass().getSimpleName()+": "+getName()+" "+getSurname()+". Wynagrodzenie: "+calculateSalary()+"PLN";
     }
 
     public static Employee generateEmployee() {
@@ -68,10 +71,6 @@ class Serviceman extends Employee {
         this.hourlyWage = hourlyWage;
     }
 
-    @Override
-    public String toString() {
-        return "Pracownik: "+super.getName()+" "+super.getSurname()+". Dział: "+this.getClass().getSimpleName()+". Wypłata: "+calculateSalary();
-    }
 
     public static Serviceman generateServiceman() {
         return new Serviceman(Dane.getImie(),Dane.getNazwisko(),Dane.getHoursDone(),Dane.getHourlyWage());
@@ -94,15 +93,6 @@ class Dealer extends Employee {
         this.commision = commision;
     }
 
-    @Override
-    public String getDept() {
-        return this.getClass().getSimpleName();
-    }
-
-    @Override
-    public String toString() {
-        return "Pracownik: "+super.getName()+" "+super.getSurname()+". Dział: "+this.getClass().getSimpleName()+". Wypłata: "+calculateSalary();
-    }
 
     public static Dealer generateDealer() {
         return new Dealer(Dane.getImie(),Dane.getNazwisko(),Dane.getSalesDone(),Dane.getCommision());
@@ -120,17 +110,11 @@ class Manager extends Employee {
         this.dealersCommision = dealersCommision;
         this.servicemenCommision = servicemenCommision;
 
-
     }
-    @Override
-    public String getDept() {
-        return getClass().getSimpleName();
-    }
-
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName()+": "+getName()+" "+getSurname()+". Wynagrodzenie: "+calculateSalary()+"\nLista płac:\n"+printAll();
+        return this.getClass().getSimpleName()+": "+getName()+" "+getSurname()+". Wynagrodzenie: "+calculateSalary()+"PLN\nLista płac:\n"+printAll();
     }
 
     public String printAll() {
@@ -146,15 +130,14 @@ class Manager extends Employee {
 
     @Override
     public float calculateSalary() {
-        //return 0;
         int dealerDeals = 0;
         int servicemenHours = 0;
 
         for(int i = 0; i < staff.length; ++i){
 
             if(staff[i] != null) {
-                dealerDeals += (staff[i].getDept()).equalsIgnoreCase("Dealer") ?  ((Dealer)staff[i]).salesDone : 0;
-                servicemenHours += (staff[i].getDept()).equalsIgnoreCase("Serviceman") ? ((Serviceman)staff[i]).hoursDone : 0;
+                dealerDeals += (staff[i] instanceof Dealer) ?  ((Dealer)staff[i]).salesDone : 0;
+                servicemenHours += (staff[i] instanceof  Serviceman) ? ((Serviceman)staff[i]).hoursDone : 0;
             }
 
 
