@@ -102,7 +102,7 @@ class Manager extends Employee {
 
     public Manager(String name, String surname, int dealersCommision, int servicemenCommision, int howManyEmployees) {
         super(name, surname);
-        this.staff = staff;
+        this.staff = generateListOfEmployees(howManyEmployees);
         this.dealersCommision = dealersCommision;
         this.servicemenCommision = servicemenCommision;
 
@@ -127,8 +127,13 @@ class Manager extends Employee {
         for(int i = 0; i < staff.length; ++i){
 
             if(staff[i] != null) {
-                dealerDeals += (staff[i] instanceof Dealer) ?  ((Dealer)staff[i]).getSalesDone() : 0;
-                servicemenHours += (staff[i] instanceof  Serviceman) ? ((Serviceman)staff[i]).getHoursDone() : 0;
+                //dealerDeals += (staff[i] instanceof Dealer) ?  ((Dealer)staff[i]).getSalesDone() : 0;
+                //servicemenHours += (staff[i] instanceof  Serviceman) ? ((Serviceman)staff[i]).getHoursDone() : 0;
+                if (staff[i] instanceof  Dealer) {
+                    dealerDeals += ((Dealer)staff[i]).getSalesDone();
+                } else {
+                    servicemenHours += ((Serviceman)staff[i]).getHoursDone();
+                }
             }
 
 
@@ -143,7 +148,12 @@ class Manager extends Employee {
 
         for(int i = 0; i < howMany && i < toReturn.length; ++i){
                 int type = (int)(Math.random()*2);
-                toReturn[i] = type == 0 ? Serviceman.generateServiceman() : Dealer.generateDealer();
+                //toReturn[i] = type == 0 ? Serviceman.generateServiceman() : Dealer.generateDealer();
+                if (type == 0 ) {
+                    toReturn[i] = Serviceman.generateServiceman();
+                } else {
+                    toReturn[i] = Dealer.generateDealer();
+                }
         }
 
         return toReturn;
@@ -151,7 +161,7 @@ class Manager extends Employee {
     }
 
     public static Manager generateManager(int howMany){
-        return new Manager(Dane.getImie(), Dane.getNazwisko(), Dane.getManagerCommision(), Dane.getManagerCommision(), );
+        return new Manager(Dane.getImie(), Dane.getNazwisko(), Dane.getManagerCommision(), Dane.getManagerCommision(), howMany);
     }
 }
 
