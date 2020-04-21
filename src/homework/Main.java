@@ -11,13 +11,11 @@ public class Main {
 
 }
 
-class Employee {
+abstract class Employee {
     private String name;
     private String surname;
 
-    public float calculateSalary() {
-        return 1500f;
-    }
+    public float calculateSalary() { return 1500f; };
 
     public Employee(String name, String surname) {
         this.name = name;
@@ -38,9 +36,6 @@ class Employee {
         return this.getClass().getSimpleName()+": "+getName()+" "+getSurname()+". Wynagrodzenie: "+calculateSalary()+"PLN";
     }
 
-    public static Employee generateEmployee() {
-        return new Employee(Dane.getImie(),Dane.getNazwisko());
-    }
 }
 
 class Serviceman extends Employee {
@@ -127,13 +122,13 @@ class Manager extends Employee {
         for(int i = 0; i < staff.length; ++i){
 
             if(staff[i] != null) {
-                //dealerDeals += (staff[i] instanceof Dealer) ?  ((Dealer)staff[i]).getSalesDone() : 0;
-                //servicemenHours += (staff[i] instanceof  Serviceman) ? ((Serviceman)staff[i]).getHoursDone() : 0;
-                if (staff[i] instanceof  Dealer) {
+                dealerDeals += (staff[i] instanceof Dealer) ?  ((Dealer)staff[i]).getSalesDone() : 0;
+                servicemenHours += (staff[i] instanceof  Serviceman) ? ((Serviceman)staff[i]).getHoursDone() : 0;
+                /*if (staff[i] instanceof  Dealer) {
                     dealerDeals += ((Dealer)staff[i]).getSalesDone();
                 } else {
                     servicemenHours += ((Serviceman)staff[i]).getHoursDone();
-                }
+                }*/
             }
 
 
@@ -148,12 +143,12 @@ class Manager extends Employee {
 
         for(int i = 0; i < howMany && i < toReturn.length; ++i){
                 int type = (int)(Math.random()*2);
-                //toReturn[i] = type == 0 ? Serviceman.generateServiceman() : Dealer.generateDealer();
-                if (type == 0 ) {
+                toReturn[i] = type == 0 ? Serviceman.generateServiceman() : Dealer.generateDealer();
+                /*if (type == 0 ) {
                     toReturn[i] = Serviceman.generateServiceman();
                 } else {
                     toReturn[i] = Dealer.generateDealer();
-                }
+                }*/
         }
 
         return toReturn;
